@@ -3,11 +3,13 @@ package view;
 import controller.Controller;
 
 import javax.swing.*;
+import javax.swing.undo.UndoManager;
 import java.awt.*;
 
 public class View extends JFrame {
     private Controller controller;
     private JTextArea textArea = new JTextArea();
+    private UndoManager undoManager = new UndoManager();
 
     private void init() {
         try {
@@ -43,12 +45,16 @@ public class View extends JFrame {
     private void initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         MenuBarHelper.initFileMenu(menuBar, controller.getFileMenuListener());
-        MenuBarHelper.initEditMenu(this, menuBar);
+        MenuBarHelper.initEditMenu(menuBar, controller.getEditMenuListener());
+        MenuBarHelper.initFormatMenu(menuBar, controller.getFormatMenuListener());
+        MenuBarHelper.initAboutMenu(menuBar, controller.getAboutMenuListener());
 
         getContentPane().add(menuBar, BorderLayout.NORTH);
     }
 
     private void initTextArea() {
+        textArea.getDocument().addUndoableEditListener(controller.getUndoManager());
+
         JScrollPane scrollPane = new JScrollPane(textArea);
 
         scrollPane.setVerticalScrollBar(new JScrollBar());

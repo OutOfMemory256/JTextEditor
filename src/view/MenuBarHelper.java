@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuBarHelper {
@@ -17,11 +18,44 @@ public class MenuBarHelper {
         addMenuItem(menu, "Exit", listener);
     }
 
-    public static void initEditMenu(JFrame frame, JMenuBar menuBar) {
+    public static void initEditMenu(JMenuBar menuBar, ActionListener listener) {
         JMenu menu = new JMenu("Edit");
         menuBar.add(menu);
 
-        menu.add(new JMenuItem("Edit"));
+        addMenuItem(menu, "Undo", listener);
+        addMenuItem(menu, "Redo", listener);
+        menu.addSeparator();
+        addMenuItem(menu, "Cut", listener);
+        addMenuItem(menu, "Copy", listener);
+        addMenuItem(menu, "Paste", listener);
+        addMenuItem(menu, "Delete", listener);
+        menu.addSeparator();
+        addMenuItem(menu, "Search", listener);
+        addMenuItem(menu,  "Find", listener);
+        addMenuItem(menu,  "Find next", listener);
+        addMenuItem(menu, "Find before", listener);
+        addMenuItem(menu, "Replace", listener);
+        addMenuItem(menu, "Go to", listener);
+        menu.addSeparator();
+        addMenuItem(menu, "Select all", listener);
+        addMenuItem(menu, "Date and Time", listener);
+    }
+
+    public static void initFormatMenu(JMenuBar menuBar, ActionListener listener) {
+        JMenu menu = new JMenu("Format");
+        menuBar.add(menu);
+
+        JCheckBoxMenuItem item = new JCheckBoxMenuItem("Line Wrap");
+        item.addActionListener(listener);
+        menu.add(item);
+        addMenuItem(menu, "Font..", listener);
+    }
+
+    public static void initAboutMenu(JMenuBar menuBar, ActionListener listener) {
+        JMenu menu = new JMenu("About");
+        menuBar.add(menu);
+
+        addMenuItem(menu, "About", listener);
     }
 
     private static void addMenuItem(JMenu menu, String title, ActionListener listener) {
