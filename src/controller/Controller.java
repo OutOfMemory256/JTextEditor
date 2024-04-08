@@ -93,9 +93,7 @@ public class Controller {
         aboutMenuListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                switch (e.getActionCommand()) {
-                    case "About" -> JOptionPane.showMessageDialog(null, "Программа версии 1.0", "Информация о программе", JOptionPane.INFORMATION_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(null, "Mahmel Production Inc.\nJNotepad\nVersion: 1.0", "Program Info", JOptionPane.INFORMATION_MESSAGE);
             }
         };
     }

@@ -1,8 +1,8 @@
 package controller;
 
+import util.WordFinder;
 import view.View;
 
-import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.undo.UndoManager;
 import java.text.SimpleDateFormat;
@@ -50,14 +50,7 @@ public class EditMenuActions {
     }
 
     public void find() {
-        JFrame frame = new JFrame();
-        frame.setSize(300, 150);
-        frame.setTitle("Find");
-        frame.setResizable(false);
-
-        //frame.getContentPane().add();
-
-        frame.setVisible(true);
+        WordFinder finder = new WordFinder(view.getTextArea());
     }
 
     public void printDateAndTime() {

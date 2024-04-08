@@ -14,6 +14,8 @@ public class FileMenuActions {
     }
 
     public void createFile() {
+        if(!saveChanges())
+            return;
         view.getTextArea().setText("");
     }
 
@@ -25,6 +27,9 @@ public class FileMenuActions {
     }
 
     public void openFile() {
+        if(!saveChanges())
+            return;
+
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showOpenDialog(view) != JFileChooser.APPROVE_OPTION)
             return;
@@ -65,9 +70,17 @@ public class FileMenuActions {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     public void exit() {
         view.dispose();
+    }
+
+    private boolean saveChanges() {
+        if(!view.hasCurrentFileForChanges())
+            return false;
+        int answer = JOptionPane.showConfirmDialog(view, "Current file has some changes. Are you sure you want to close it?");
+        return answer == JOptionPane.OK_OPTION;
     }
 }

@@ -65,6 +65,10 @@ public class View extends JFrame {
         getContentPane().add(scrollPane);
     }
 
+    public boolean hasCurrentFileForChanges() {
+        return controller.getUndoManager().canUndoOrRedo();
+    }
+
     public JTextArea getTextArea() {
         return textArea;
     }

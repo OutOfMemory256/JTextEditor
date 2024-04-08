@@ -30,12 +30,8 @@ public class MenuBarHelper {
         addMenuItem(menu, "Paste", listener);
         addMenuItem(menu, "Delete", listener);
         menu.addSeparator();
-        addMenuItem(menu, "Search", listener);
         addMenuItem(menu,  "Find", listener);
-        addMenuItem(menu,  "Find next", listener);
-        addMenuItem(menu, "Find before", listener);
         addMenuItem(menu, "Replace", listener);
-        addMenuItem(menu, "Go to", listener);
         menu.addSeparator();
         addMenuItem(menu, "Select all", listener);
         addMenuItem(menu, "Date and Time", listener);
@@ -45,9 +41,7 @@ public class MenuBarHelper {
         JMenu menu = new JMenu("Format");
         menuBar.add(menu);
 
-        JCheckBoxMenuItem item = new JCheckBoxMenuItem("Line Wrap");
-        item.addActionListener(listener);
-        menu.add(item);
+        addCheckBoxMenuItem(menu, "Line Wrap", listener);
         addMenuItem(menu, "Font..", listener);
     }
 
@@ -55,12 +49,18 @@ public class MenuBarHelper {
         JMenu menu = new JMenu("About");
         menuBar.add(menu);
 
-        addMenuItem(menu, "About", listener);
+        addMenuItem(menu, "About Program", listener);
     }
 
     private static void addMenuItem(JMenu menu, String title, ActionListener listener) {
         JMenuItem menuItem = new JMenuItem(title);
         menuItem.addActionListener(listener);
         menu.add(menuItem);
+    }
+
+    private static void addCheckBoxMenuItem(JMenu menu, String title, ActionListener listener) {
+        JCheckBoxMenuItem item = new JCheckBoxMenuItem(title);
+        item.addActionListener(listener);
+        menu.add(item);
     }
 }
