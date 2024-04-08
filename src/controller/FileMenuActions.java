@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.io.*;
 
 public class FileMenuActions {
-    private View view;
+    private final View view;
     private File currentFile;
 
     public FileMenuActions(View view) {
@@ -14,7 +14,7 @@ public class FileMenuActions {
     }
 
     public void createFile() {
-        if(!saveChanges())
+        if(askForSavingChanges())
             return;
         view.getTextArea().setText("");
     }
@@ -27,7 +27,7 @@ public class FileMenuActions {
     }
 
     public void openFile() {
-        if(!saveChanges())
+        if(askForSavingChanges())
             return;
 
         JFileChooser fileChooser = new JFileChooser();
@@ -77,10 +77,10 @@ public class FileMenuActions {
         view.dispose();
     }
 
-    private boolean saveChanges() {
-        if(!view.hasCurrentFileForChanges())
-            return false;
+    private boolean askForSavingChanges() {
+        if(!view.hasCurrentFileChanges())
+            return true;
         int answer = JOptionPane.showConfirmDialog(view, "Current file has some changes. Are you sure you want to close it?");
-        return answer == JOptionPane.OK_OPTION;
+        return answer != JOptionPane.OK_OPTION;
     }
 }

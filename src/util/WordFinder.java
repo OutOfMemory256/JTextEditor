@@ -6,25 +6,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class WordFinder implements ActionListener {
-    private JFrame frame = new JFrame();
-    private JTextField textField = new JTextField();
-    private JTextArea textArea;
-    private ButtonGroup radioGroup = new ButtonGroup();
-    JRadioButton buttonUp = new JRadioButton("Up");
-    JRadioButton buttonDown = new JRadioButton("Down");
+    private final JFrame frame = new JFrame();
+    private final JTextField textField = new JTextField();
+    private final JTextArea textArea;
+    private final ButtonGroup radioGroup = new ButtonGroup();
+    JRadioButton radioButtonUp = new JRadioButton("Up");
+    JRadioButton radioButtonDown = new JRadioButton("Down");
     JCheckBox checkBoxButtonMatchCase = new JCheckBox("Match case");
     JCheckBox checkBoxButtonWrapAround = new JCheckBox("Wrap around");
 
     public WordFinder(JTextArea textArea) {
         this.textArea = textArea;
-        init();
-    }
-
-    public static void main(String[] args) {
-        WordFinder wordFinder = new WordFinder(new JTextArea("NIGGEA"));
-    }
-
-    private void init() {
         initGUI();
     }
 
@@ -43,6 +35,7 @@ public class WordFinder implements ActionListener {
         frame.setTitle("Find");
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     private void initTextInputField() {
@@ -76,10 +69,10 @@ public class WordFinder implements ActionListener {
 
         JPanel radioButtonsPanel = new JPanel(new GridLayout(2, 1));
 
-        radioGroup.add(buttonUp);
-        radioGroup.add(buttonDown);
-        radioButtonsPanel.add(buttonUp);
-        radioButtonsPanel.add(buttonDown);
+        radioGroup.add(radioButtonUp);
+        radioGroup.add(radioButtonDown);
+        radioButtonsPanel.add(radioButtonUp);
+        radioButtonsPanel.add(radioButtonDown);
 
         JPanel checkboxPanel = new JPanel(new GridLayout(2, 1));
 
@@ -110,24 +103,18 @@ public class WordFinder implements ActionListener {
         String str = textField.getText();
         String text = textArea.getText();
         int startIndex = textArea.getSelectionStart();
-        if (buttonUp.isSelected()) {
+        boolean hasFound = false;
+
+        if (radioButtonUp.isSelected()) {
             startIndex -= 1;
-            int possibleSelectionStart;
-            int possibleSelectionEnd;
             for (int i = startIndex; i >= 0; i--) {
-                boolean hasFound = false;
-                if(checkBoxButtonMatchCase.isSelected() && Character.toLowerCase(str.charAt(str.length() - 1)) != Character.toLowerCase(text.charAt(i)) || str.charAt(str.length() - 1) != text.charAt(i) && !checkBoxButtonMatchCase.isSelected())
-                    continue;
                 int temp = i;
                 for(int j = str.length() - 1; j >= 0 && i >= 0; j--) {
-                    if(checkBoxButtonMatchCase.isSelected() && Character.toLowerCase(str.charAt(j)) != Character.toLowerCase(text.charAt(i)) || str.charAt(j) == text.charAt(i) && !checkBoxButtonMatchCase.isSelected()) {
+                    if(checkBoxButtonMatchCase.isSelected() && Character.toLowerCase(str.charAt(j)) == Character.toLowerCase(text.charAt(i)) || str.charAt(j) == text.charAt(i) && !checkBoxButtonMatchCase.isSelected()) {
                         i--;
                         if(j == 0) {
-                            possibleSelectionStart = i;
-                            possibleSelectionEnd = i + str.length();
-                            textArea.setSelectionStart(possibleSelectionStart + 1);
-                            textArea.setSelectionEnd(possibleSelectionEnd + 1);
-                            System.out.println(i + " " + possibleSelectionEnd);
+                            textArea.setSelectionStart(i + 1);
+                            textArea.setSelectionEnd(i + str.length() + 1);
                             hasFound = true;
                             break;
                         }
@@ -139,24 +126,18 @@ public class WordFinder implements ActionListener {
                 if(hasFound)
                     break;
             }
-        } else if (buttonDown.isSelected()) {
-            int possibleSelectionStart;
-            int possibleSelectionEnd;
+        }
+
+        if (radioButtonDown.isSelected()) {
             startIndex += str.length();
             for (int i = startIndex; i < text.length(); i++) {
-                boolean hasFound = false;
-                if(checkBoxButtonMatchCase.isSelected() && Character.toLowerCase(str.charAt(0)) != Character.toLowerCase(text.charAt(i)) || str.charAt(0) != text.charAt(i) && !checkBoxButtonMatchCase.isSelected())
-                    continue;
                 int temp = i;
                 for(int j = 0; j < str.length() && i < text.length(); j++) {
                     if(checkBoxButtonMatchCase.isSelected() && Character.toLowerCase(str.charAt(j)) == Character.toLowerCase(text.charAt(i)) || str.charAt(j) == text.charAt(i) && !checkBoxButtonMatchCase.isSelected()) {
                         i++;
                         if(j == str.length() - 1) {
-                            possibleSelectionStart = i - str.length();
-                            possibleSelectionEnd = i;
-                            textArea.setSelectionStart(possibleSelectionStart);
-                            textArea.setSelectionEnd(possibleSelectionEnd);
-                            System.out.println(possibleSelectionStart + " " + possibleSelectionEnd);
+                            textArea.setSelectionStart(i - str.length());
+                            textArea.setSelectionEnd(i);
                             hasFound = true;
                             break;
                         }

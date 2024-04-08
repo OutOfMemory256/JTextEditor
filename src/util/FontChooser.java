@@ -37,15 +37,13 @@ public class FontChooser implements ActionListener{
         int setFontStyle = fontStyle.getSelectedIndex();
         String setFont = font.getSelectedValue();
 
-        Font newFont = switch (setFontStyle) {
+        return switch (setFontStyle) {
             case 0 -> new Font(setFont, Font.PLAIN, setFontSize);
             case 1 -> new Font(setFont, Font.ITALIC, setFontSize);
             case 2 -> new Font(setFont, Font.BOLD, setFontSize);
             case 3 -> new Font(setFont, Font.BOLD + Font.ITALIC, setFontSize);
             default -> throw new IllegalStateException("Unexpected value: " + setFontStyle);
         };
-
-        return newFont;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -139,23 +137,17 @@ public class FontChooser implements ActionListener{
     }
 
     private void addActionListenersToScrollPanes() {
-        font.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent arg0) {
-                Font newfont = valueFontChange();
-                exampleLabel.setFont(newfont);
-            }
+        font.addListSelectionListener(arg0 -> {
+            Font newfont = valueFontChange();
+            exampleLabel.setFont(newfont);
         });
-        fontStyle.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent arg0) {
-                Font newfont = valueFontChange();
-                exampleLabel.setFont(newfont);
-            }
+        fontStyle.addListSelectionListener(arg0 -> {
+            Font newfont = valueFontChange();
+            exampleLabel.setFont(newfont);
         });
-        fontSize.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent arg0) {
-                Font newfont = valueFontChange();
-                exampleLabel.setFont(newfont);
-            }
+        fontSize.addListSelectionListener(arg0 -> {
+            Font newfont = valueFontChange();
+            exampleLabel.setFont(newfont);
         });
     }
 }
