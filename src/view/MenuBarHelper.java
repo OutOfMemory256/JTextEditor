@@ -8,32 +8,24 @@ public class MenuBarHelper {
         JMenu menu = new JMenu("File");
         menuBar.add(menu);
 
-        addMenuItem(menu, "New", listener);
-        addMenuItem(menu, "New Frame", listener);
-        addMenuItem(menu, "Open", listener);
-        addMenuItem(menu, "Save", listener);
-        addMenuItem(menu, "Save as..", listener);
-        menu.addSeparator();
-        addMenuItem(menu, "Exit", listener);
+        String[] fileMenuItems = new String[]{"New", "New Frame", "Open", "Save", "Save as..", "Separator", "Exit"};
+        for (String item: fileMenuItems)
+            if (item.equals("Separator"))
+                menu.addSeparator();
+            else
+                addMenuItem(menu, item, listener);
     }
 
     public static void initEditMenu(JMenuBar menuBar, ActionListener listener) {
         JMenu menu = new JMenu("Edit");
         menuBar.add(menu);
 
-        addMenuItem(menu, "Undo", listener);
-        addMenuItem(menu, "Redo", listener);
-        menu.addSeparator();
-        addMenuItem(menu, "Cut", listener);
-        addMenuItem(menu, "Copy", listener);
-        addMenuItem(menu, "Paste", listener);
-        addMenuItem(menu, "Delete", listener);
-        menu.addSeparator();
-        addMenuItem(menu,  "Find", listener);
-        addMenuItem(menu, "Replace", listener);
-        menu.addSeparator();
-        addMenuItem(menu, "Select all", listener);
-        addMenuItem(menu, "Date and Time", listener);
+        String[] editMenuItems = new String[] {"Undo", "Redo", "Separator", "Cut", "Copy", "Paste", "Delete", "Separator", "Find", "Replace", "Select all", "Date and Time"};
+        for (String item: editMenuItems)
+            if (item.equals("Separator"))
+                menu.addSeparator();
+            else
+                addMenuItem(menu, item, listener);
     }
 
     public static void initFormatMenu(JMenuBar menuBar, ActionListener listener) {

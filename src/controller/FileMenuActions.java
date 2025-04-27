@@ -38,8 +38,11 @@ public class FileMenuActions {
         try (BufferedReader reader = new BufferedReader(new FileReader(currentFile))) {
 
             String line;
-            while ((line = reader.readLine()) != null)
+            view.getTextArea().setText("");
+            while ((line = reader.readLine()) != null) {
                 view.getTextArea().append(line);
+                view.getTextArea().append("\n");
+            }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
