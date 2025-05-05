@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class View extends JFrame {
     private Controller controller;
-    private JTextArea textArea = new JTextArea();
+    private JStealthTextArea textArea = new JStealthTextArea();
 
     private void init() {
         initGUI();
@@ -34,6 +34,7 @@ public class View extends JFrame {
         MenuBarHelper.initEditMenu(menuBar, controller.getEditMenuListener());
         MenuBarHelper.initFormatMenu(menuBar, controller.getFormatMenuListener());
         MenuBarHelper.initAboutMenu(menuBar, controller.getAboutMenuListener());
+        MenuBarHelper.initCipheringMenu(menuBar, controller.getCipheringMenuListener());
 
         getContentPane().add(menuBar, BorderLayout.NORTH);
     }
@@ -55,7 +56,7 @@ public class View extends JFrame {
         return controller.getUndoManager().canUndoOrRedo();
     }
 
-    public JTextArea getTextArea() {
+    public JStealthTextArea getTextArea() {
         return textArea;
     }
 

@@ -1,6 +1,7 @@
 package controller;
 
 import util.FontChooser;
+import view.JStealthTextArea;
 import view.View;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class Controller {
 
     private ActionListener formatMenuListener;
     private ActionListener aboutMenuListener;
+    private ActionListener cipheringMenuListener;
 
     public void init() {
         if(view != null) {
@@ -25,6 +27,7 @@ public class Controller {
             initEditMenuListener();
             initFormatMenuListener();
             initAboutMenuListener();
+            initCipheringMenuListener();
         } else
             System.out.println("View didn't initialize");
     }
@@ -83,6 +86,22 @@ public class Controller {
         aboutMenuListener = e -> JOptionPane.showMessageDialog(null, "Mahmel Production Inc.\nJNotepad\nVersion: 1.0", "Program Info", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    private void initCipheringMenuListener() {
+        cipheringMenuListener = e -> {
+            switch (e.getActionCommand()) {
+                case "Visibility" -> {
+                    JStealthTextArea stealthTextArea = view.getTextArea();
+                    stealthTextArea.setStealthModeEnabled(!stealthTextArea.isStealthModeEnabled());
+
+                    JCheckBoxMenuItem item = ((JCheckBoxMenuItem) e.getSource());
+                    item.setSelected(!stealthTextArea.isStealthModeEnabled());
+
+                    stealthTextArea.updateTextDisplay();
+                }
+            }
+        };
+    }
+
     public UndoManager getUndoManager() {
         return editMenuActions.getUndoManager();
     }
@@ -101,6 +120,10 @@ public class Controller {
 
     public ActionListener getAboutMenuListener() {
         return aboutMenuListener;
+    }
+
+    public ActionListener getCipheringMenuListener() {
+        return cipheringMenuListener;
     }
 
     public void setView(View view) {

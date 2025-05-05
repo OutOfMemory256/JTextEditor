@@ -28,6 +28,13 @@ public class MenuBarHelper {
                 addMenuItem(menu, item, listener);
     }
 
+    public static void initCipheringMenu(JMenuBar menuBar, ActionListener listener) {
+        JMenu menu = new JMenu("Ciphering");
+        menuBar.add(menu);
+
+        addCheckBoxMenuItem(menu, "Visibility", listener);
+    }
+
     public static void initFormatMenu(JMenuBar menuBar, ActionListener listener) {
         JMenu menu = new JMenu("Format");
         menuBar.add(menu);
