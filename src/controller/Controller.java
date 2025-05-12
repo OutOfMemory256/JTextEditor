@@ -1,5 +1,6 @@
 package controller;
 
+import controller.encryption.EncryptingAlgorithmType;
 import util.FontChooser;
 import view.JStealthTextArea;
 import view.View;
@@ -7,6 +8,7 @@ import view.View;
 import javax.swing.*;
 import javax.swing.undo.UndoManager;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 public class Controller {
     private View view;
@@ -97,6 +99,14 @@ public class Controller {
                     item.setSelected(!stealthTextArea.isStealthModeEnabled());
 
                     stealthTextArea.updateTextDisplay();
+                }
+                case "Encipher File" -> {
+                    String text = CipheringController.encrypt(view.getComboBox().getSelectedItem().toString(), view.getTextArea().getOriginalText(), view.getTextField().getText());
+                    view.getTextArea().setText(text);
+                }
+                case "Decipher File" -> {
+                    String text = CipheringController.decrypt(view.getComboBox().getSelectedItem().toString(), view.getTextArea().getOriginalText(), view.getTextField().getText());
+                    view.getTextArea().setText(text);
                 }
             }
         };

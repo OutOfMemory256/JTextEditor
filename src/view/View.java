@@ -8,6 +8,8 @@ import java.awt.*;
 public class View extends JFrame {
     private Controller controller;
     private JStealthTextArea textArea = new JStealthTextArea();
+    private JComboBox<String> comboBox;
+    private JTextField textField = new JTextField();
 
     private void init() {
         initGUI();
@@ -36,7 +38,20 @@ public class View extends JFrame {
         MenuBarHelper.initAboutMenu(menuBar, controller.getAboutMenuListener());
         MenuBarHelper.initCipheringMenu(menuBar, controller.getCipheringMenuListener());
 
-        getContentPane().add(menuBar, BorderLayout.NORTH);
+        JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.X_AXIS));
+        innerPanel.add(menuBar);
+        innerPanel.add(new JLabel("Password"));
+        innerPanel.add(textField);
+        textField.setColumns(32);
+
+        String[] strs = new String[] {
+                "CAESAR",
+                "XOR"
+        };
+        comboBox = new JComboBox<>(strs);
+        innerPanel.add(comboBox);
+        getContentPane().add(innerPanel, BorderLayout.NORTH);
     }
 
     private void initTextArea() {
@@ -63,5 +78,13 @@ public class View extends JFrame {
     public void setController(Controller controller) {
         this.controller = controller;
         init();
+    }
+
+    public JComboBox<String> getComboBox() {
+        return comboBox;
+    }
+
+    public JTextField getTextField() {
+        return textField;
     }
 }

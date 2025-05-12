@@ -14,7 +14,7 @@ public class FileMenuActions {
     }
 
     public void createFile() {
-        if(askForSavingChanges())
+        if (askForSavingChanges())
             return;
         view.getTextArea().setText("");
     }
@@ -27,25 +27,21 @@ public class FileMenuActions {
     }
 
     public void openFile() {
-        if(askForSavingChanges())
-            return;
-
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showOpenDialog(view) != JFileChooser.APPROVE_OPTION)
             return;
-
-        currentFile = fileChooser.getSelectedFile();
-        try (BufferedReader reader = new BufferedReader(new FileReader(currentFile))) {
-
-            String line;
-            view.getTextArea().setText("");
-            while ((line = reader.readLine()) != null) {
-                view.getTextArea().append(line);
-                view.getTextArea().append("\n");
+        else {
+            currentFile = fileChooser.getSelectedFile();
+            try (BufferedReader reader = new BufferedReader(new FileReader(currentFile))) {
+                String line;
+                view.getTextArea().setText("");
+                while ((line = reader.readLine()) != null) {
+                    view.getTextArea().append(line);
+                    view.getTextArea().append("\n");
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 

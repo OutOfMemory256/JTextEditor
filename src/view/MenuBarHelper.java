@@ -33,6 +33,8 @@ public class MenuBarHelper {
         menuBar.add(menu);
 
         addCheckBoxMenuItem(menu, "Visibility", listener);
+        addMenuItem(menu, "Encipher File", listener);
+        addMenuItem(menu, "Decipher File", listener);
     }
 
     public static void initFormatMenu(JMenuBar menuBar, ActionListener listener) {

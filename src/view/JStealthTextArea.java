@@ -6,10 +6,11 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.regex.Pattern;
 
 public class JStealthTextArea extends JTextArea {
     private final StringBuilder originalText = new StringBuilder();
-    private boolean stealthModeEnabled = true;
+    private boolean stealthModeEnabled = false;
     private String currentHoverWord;
     private Rectangle wordBounds;
 
@@ -38,7 +39,6 @@ public class JStealthTextArea extends JTextArea {
 
     public JStealthTextArea() {
        setFont(new Font("Monospaced", Font.PLAIN, 20));
-        ((AbstractDocument) getDocument()).setDocumentFilter(new StealthDocumentFilter());
 
         addMouseMotionListener(new MouseAdapter() {
             @Override
@@ -103,7 +103,7 @@ public class JStealthTextArea extends JTextArea {
     private String maskString(String input) {
         StringBuilder sb = new StringBuilder();
         for (char c : input.toCharArray()) {
-            sb.append(Character.isLetter(c) ? '*' : c);
+            sb.append(!Pattern.matches("\\p{Punct}", c + "") ? '*' : c);
         }
         return sb.toString();
     }
@@ -161,5 +161,9 @@ public class JStealthTextArea extends JTextArea {
         frame.add(toggleButton, BorderLayout.NORTH);
         frame.add(new JScrollPane(stealthTextArea), BorderLayout.CENTER);
         frame.setVisible(true);
+    }
+
+    public String getOriginalText() {
+        return originalText.toString();
     }
 }
